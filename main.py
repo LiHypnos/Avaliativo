@@ -42,6 +42,25 @@ def format_data(event=None):
     ent2.delete(0, "end")
     ent2.insert(0, new_text)
 
+def format_telefone(event=None):
+    text = ent4.get().replace("+", "").replace("(","").replace(")","")[:13]
+    new_text = ""
+
+    if event.keysym.lower() == "backspace": return
+
+    for index in range(len(text)):
+
+        if not text[index] in "0123456789": continue
+        if index in [1]:
+            new_text += text[index] + " "
+        elif index in [7]:
+            new_text += text[index] + "-"
+        else:
+            new_text += text[index]
+
+    ent4.delete(0, "end")
+    ent4.insert(0, new_text)
+
 #-----------------
 
 #funções
@@ -94,7 +113,8 @@ lb4=Label(f1, text='CPF:',font='Arial 14',bg='Dark Grey')
 ent3=Entry(f1,font='Arial 14',bg='Dark Grey')
 ent3.bind("<KeyRelease>", format_cpf)
 lb5=Label(f1, text='Telefone:',font='Arial 14',bg='Dark Grey')
-ent4=Entry(f1,font='Arial 14',bg='Dark Grey',show='*')
+ent4=Entry(f1,font='Arial 14',bg='Dark Grey')
+ent4.bind("<KeyRelease>", format_telefone)
 #f2 -  rua,n, bairro, cidade,UF
 lbl1=Label(f2,text='Endereço',font='Arial 20',bg='Dark Grey')
 lbl2=Label(f2, text='Rua:', font='Arial 14',bg='Dark Grey')
