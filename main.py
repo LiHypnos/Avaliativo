@@ -23,8 +23,10 @@ def format_cpf(event=None):
     ent3.delete(0, "end")
     ent3.insert(0, new_text)
 
+
+
 def format_data(event=None):
-    text = ent3.get().replace(".", "").replace("-", "")[:11]
+    text = ent2.get().replace("/", "")[:8]
     new_text = ""
 
     if event.keysym.lower() == "backspace": return
@@ -32,15 +34,13 @@ def format_data(event=None):
     for index in range(len(text)):
 
         if not text[index] in "0123456789": continue
-        if index in [2, 5]:
-            new_text += text[index] + "."
-        elif index == 8:
-            new_text += text[index] + "-"
+        if index in [1, 3]:
+            new_text += text[index] + "/"
         else:
             new_text += text[index]
 
-    ent3.delete(0, "end")
-    ent3.insert(0, new_text)
+    ent2.delete(0, "end")
+    ent2.insert(0, new_text)
 
 #-----------------
 
@@ -89,6 +89,7 @@ lb2=Label(f1,text='Nome:',font='Arial 14',bg='Dark Grey')
 ent1=Entry(f1,font='Arial 14',bg='Dark Grey')
 lb3=Label(f1, text='Data Nasc:',font='Arial 14',bg='Dark Grey')
 ent2=Entry(f1,font='Arial 14',bg='Dark Grey')
+ent2.bind("<KeyRelease>", format_data)
 lb4=Label(f1, text='CPF:',font='Arial 14',bg='Dark Grey')
 ent3=Entry(f1,font='Arial 14',bg='Dark Grey')
 ent3.bind("<KeyRelease>", format_cpf)
